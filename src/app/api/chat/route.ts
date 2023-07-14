@@ -3,18 +3,17 @@ import { ChatOpenAI } from 'langchain/chat_models/openai'
 import { AIMessage, HumanMessage } from 'langchain/schema'
 import { ConversationalRetrievalQAChain } from 'langchain/chains'
 import { BufferMemory } from "langchain/memory";
-import { loadDb } from '@/utils/db';
+import {useChat} from 'ai/react'
  
 export const runtime = 'edge'
 
 export async function POST(req: Request) {
-  const { messages } = await req.json()
+  /* const { messages } = await req.json()
  
   const llm = new ChatOpenAI({
     streaming: true
   })
 
-  const vectorDB = await loadDb()
 
   const memory = new BufferMemory({
       memoryKey: "chat_history", // Must be set to "chat_history"
@@ -43,5 +42,5 @@ export async function POST(req: Request) {
     )
     .catch(console.error)
  
-  return new StreamingTextResponse(stream)
+  return new StreamingTextResponse(stream) */
 }
