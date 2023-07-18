@@ -1,10 +1,15 @@
-export class Message {
+export class Message implements Message{
   role: string;
   content: string;
+  source?: any;
 
   constructor(role: string, content: string) {
     this.role = role;
     this.content = content;
+  }
+
+  setSource(source: string) {
+    this.source = source;
   }
 }
 
