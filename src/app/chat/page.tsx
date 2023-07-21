@@ -1,6 +1,11 @@
+"use client"
+
 import Chat from "@/components/chat/chat.component";
+import { Socket, io } from "socket.io-client";
 
 export default function ChatPage() {
+  const socket: Socket = io("http://localhost:4000");
+
   return (
     <main
       className='flex flex-col items-center min-h-screen'
@@ -11,7 +16,7 @@ export default function ChatPage() {
         backgroundRepeat: "no-repeat",
       }}
     >
-      <Chat />
+      <Chat socket={socket}/>
     </main>
   );
 }

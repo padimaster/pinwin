@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useId } from "react";
+import React, { useContext, useEffect, useId, useRef } from "react";
 import Image from "next/image";
 import SendIcon from "@mui/icons-material/Send";
 import { useChat } from "./chat.hooks";
@@ -8,7 +8,15 @@ import { AIMessage, HumanMessage, Message } from "./chat.schemas";
 import { Socket, io } from "socket.io-client";
 
 export default function Chat() {
+  const chatRef = useRef<HTMLDivElement>(null);
   const { messages, input, handleInputChange, handleSubmit } = useChat();
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat when messages are updated
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const welcomeMessage = new AIMessage(
     "Hola, soy Evaristo, el asistente virtual del municipio de Quito. ¿En qué puedo ayudarte?"
@@ -22,7 +30,7 @@ export default function Chat() {
         Consulta tus dudas con nuestro asistente virtual
       </h3>
 
-      <div className='flex flex-col h-full overflow-x-auto mb-20'>
+      <div ref={chatRef} className='flex flex-col h-full overflow-x-auto mb-20'>
         <div className='flex flex-col w-full h-full'>
           <div className='grid grid-cols-12 gap-y-2'>
             <ChatLine message={welcomeMessage} />
@@ -71,7 +79,7 @@ function ChatLine({ message }: { message: Message }) {
     role === "user" ? "col-start-2 col-end-13" : "col-start-1 col-end-12";
   const flowClass = role === "user" ? "flex-row-reverse" : "flex-row";
   const marginClass = role === "user" ? "mr-3" : "ml-3";
-  const avatarSrc = role === "user" ? "" : "/don-evaristo.jpg";
+  const avatarSrc = role === "user" ? "/default-avatar.png" : "/don-evaristo.jpg";
 
   return (
     <div key={useId()} className={`${positionClass} p-1 rounded-lg `}>
@@ -92,20 +100,31 @@ function ChatLine({ message }: { message: Message }) {
             {content}
           </div>
 
-          {message && message.source && (
-            <div className='lg:text-lg bg-gray-200 py-2 px-4 ml-3 shadow rounded-xl text-justify'>
-              <h6>Fuente:</h6>
-              <p>{message.source[0].pageContent}</p>
-              <h6 className='mt-1'>Recurso:</h6>
-              <a
-                className=''
-                href={message.source[0].metadata.source}
-                target='_blank'
+          {message &&
+            message.source &&
+            message.source.map((source: any) => (
+              <div
+                className='lg:text-lg bg-gray-300 py-2 px-4 ml-3 shadow rounded-xl text-justify mt-2'
+                key={source.metadata.url}
               >
-                {message.source[0].metadata.source} <br />
-              </a>
-            </div>
-          )}
+                <p>
+                  <strong>Fuente:</strong>
+                  {" " + source.pageContent}
+                </p>
+                <p className='mt-1'>
+                  <strong>Acceder al recurso:</strong>
+                  {
+                    <a
+                      className='underline-offset-1'
+                      href={source.metadata.url}
+                      target='_blank'
+                    >
+                      {" " + source.metadata.fileName} <br />
+                    </a>
+                  }
+                </p>
+              </div>
+            ))}
         </div>
       </div>
     </div>
