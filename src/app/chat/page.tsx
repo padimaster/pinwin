@@ -1,22 +1,27 @@
-"use client"
+"use client";
 
-import Chat from "@/components/chat/chat.component";
+import SocketProvider from "@/providers/socket.provider";
 import { Socket, io } from "socket.io-client";
+import Chat from "./ components/chat.component";
+import { IMAGES } from "@/lib/images.lib";
+import CapybaraAvatar from "./ components/chat-capybara.component";
 
 export default function ChatPage() {
-  const socket: Socket = io("http://localhost:4000");
-
   return (
-    <main
-      className='flex flex-col items-center min-h-screen'
-      style={{
-        backgroundImage: `linear-gradient(rgba(36, 17, 50, 0.7), rgba(36, 17, 50, 0.7)), url('./logo.svg')`,
-        backgroundPosition: "center",
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-      }}
-    >
-      <Chat socket={socket}/>
-    </main>
+    <SocketProvider>
+      <main
+        className='min-w-screen min-h-screen flex justify-evenly items-center'
+        style={{
+          backgroundImage: `url(${IMAGES.CHAT.BACKGROUND})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          objectFit: "contain",
+        }}
+      >
+        <CapybaraAvatar />
+        <Chat />
+      </main>
+    </SocketProvider>
   );
 }

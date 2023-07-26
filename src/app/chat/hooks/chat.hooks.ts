@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { HumanMessage, AIMessage, Message } from "./chat.schemas";
+import { useContext, useEffect, useRef, useState } from "react";
+import { HumanMessage, AIMessage, Message } from "../schemas/chat.schemas";
 import { Socket, io } from "socket.io-client";
 import socketIOClient from "socket.io-client";
+import { SocketContext } from "@/providers/socket.provider";
 
 const SOCKET_SERVER_URL = "http://localhost:4000";
 
@@ -9,16 +10,12 @@ export const useChat = () => {
   //const socket = io("http://localhost:4000")
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState<string>("");
-
-  const socketRef = useRef<any>(null);
-  const SOCKET_SERVER_URL = "http://localhost:4000";
+  const { socket } = useContext(SocketContext);
 
   useEffect(() => {
-    // Creates a WebSocket connection
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL);
 
     // Listens for incoming messages
-    socketRef.current.on("data", (chunk: string) => {
+    socket.on("data", (chunk: string) => {
       if (chunk === "[DONE]") {
         return;
       }
@@ -33,7 +30,7 @@ export const useChat = () => {
       });
     });
 
-    socketRef.current.on("source", (sourceDocuments: any) => {
+    socket.on("source", (sourceDocuments: any) => {
       setMessages((prev) => {
         const prevMessage = prev[prev.length - 1];
         const newAIMessage = new AIMessage(prevMessage.content);
@@ -60,7 +57,7 @@ export const useChat = () => {
     // Destroys the socket reference
     // when the connection is closed
     return () => {
-      socketRef.current.disconnect();
+      socket.disconnect();
     };
   }, []);
 
@@ -76,7 +73,7 @@ export const useChat = () => {
     setMessages((prev) => [...prev, new AIMessage("")]);
     setInput("");
 
-    socketRef.current.emit("chat", userMessage.content);
+    socket.emit("chat", userMessage.content);
   };
 
   return {
