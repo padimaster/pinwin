@@ -1,26 +1,28 @@
-export class Message implements Message{
+import { sourceDocumentProps } from "../types/chat.types";
+
+export class Message implements Message {
   role: string;
   content: string;
-  source?: any;
+  sourceDocuments?: any;
 
   constructor(role: string, content: string) {
     this.role = role;
     this.content = content;
   }
 
-  setSource(source: string) {
-    this.source = source;
+  setSourceDocuments(sourceDocuments: sourceDocumentProps[]) {
+    this.sourceDocuments = sourceDocuments;
   }
 }
 
 export class HumanMessage extends Message {
-  constructor(content : string) {
+  constructor(content: string) {
     super("user", content);
   }
 }
 
 export class AIMessage extends Message {
-  constructor(content : string) {
+  constructor(content: string) {
     super("ai", content);
   }
 }
