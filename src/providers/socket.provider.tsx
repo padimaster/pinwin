@@ -1,5 +1,6 @@
 // SocketProvider.jsx
 
+import { config } from "@/config";
 import { createContext, useEffect, useRef } from "react";
 import socketIOClient from "socket.io-client";
 
@@ -8,7 +9,7 @@ export const SocketContext = createContext({ socket: null } as any);
 const SocketProvider: any = ({ children }: any) => {
   // we use a ref to store the socket as it won't be updated frequently
   const socketRef = useRef<any>(null);
-  const SOCKET_SERVER_URL = "http://localhost:4000";
+  const SOCKET_SERVER_URL = config.api.url;
 
   socketRef.current = socketIOClient(SOCKET_SERVER_URL);
   

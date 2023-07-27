@@ -3,8 +3,7 @@ import { HumanMessage, AIMessage, Message } from "../schemas/chat.schemas";
 import { Socket, io } from "socket.io-client";
 import socketIOClient from "socket.io-client";
 import { SocketContext } from "@/providers/socket.provider";
-
-const SOCKET_SERVER_URL = "http://localhost:4000";
+import { config } from "@/config";
 
 export const useChat = () => {
   //const socket = io("http://localhost:4000")
@@ -13,7 +12,6 @@ export const useChat = () => {
   const { socket } = useContext(SocketContext);
 
   useEffect(() => {
-
     // Listens for incoming messages
     socket.on("data", (chunk: string) => {
       if (chunk === "[DONE]") {
@@ -30,24 +28,12 @@ export const useChat = () => {
       });
     });
 
-    socket.on("source", (sourceDocuments: any) => {
+    socket.on("source", (response: any) => {
+      const { text, sourceDocuments } = response;
       setMessages((prev) => {
-        const prevMessage = prev[prev.length - 1];
-        const newAIMessage = new AIMessage(prevMessage.content);
-        const sources = sourceDocuments.map((sourceDocument: any) => {
-          const currentSource = sourceDocument.metadata.source;
-          const filePath = currentSource.substring(
-            currentSource.indexOf("public/") + "public/".length
-          );
-          const fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
-          sourceDocument.pageContent =
-            sourceDocument.pageContent.substring(0, 150) + "...";
-          sourceDocument.metadata.url = `http://localhost:4000/${filePath}`;
-          sourceDocument.metadata.fileName = fileName;
-          return sourceDocument;
-        });
-
-        newAIMessage.source = sources;
+        const newAIMessage = new AIMessage(text);
+        newAIMessage.setSourceDocuments(sourceDocuments);
+        console.log(newAIMessage);
         const newMessages = [...prev];
         newMessages.pop();
         newMessages.push(newAIMessage);

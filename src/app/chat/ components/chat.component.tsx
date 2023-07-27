@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useContext, useEffect, useId, useRef } from "react";
-import Image from "next/image";
+import React, { useEffect, useRef } from "react";
 import SendIcon from "@mui/icons-material/Send";
+import { nanoid } from "nanoid";
 import { useChat } from "../hooks/chat.hooks";
 import { AIMessage, HumanMessage, Message } from "../schemas/chat.schemas";
-import { Socket, io } from "socket.io-client";
 import { CHAT_WELCOME_MESSAGE, CHAT_TITLE } from "../lib/chat.lib";
-import { nanoid } from "nanoid";
 import ChatLine from "./chat-line.component";
 
 export default function Chat() {
@@ -34,9 +32,9 @@ export default function Chat() {
       <div ref={chatRef} className='flex flex-col h-full overflow-x-auto mb-20'>
         <div className='flex flex-col w-full h-full'>
           <div className='grid grid-cols-12 gap-y-2'>
-            <ChatLine message={welcomeMessage} />
+            <ChatLine message={welcomeMessage} key={nanoid()}/>
             {messages.map((m: Message) => (
-              <ChatLine message={m} />
+              <ChatLine message={m} key={nanoid()}/>
             ))}
           </div>
         </div>
