@@ -20,9 +20,9 @@ export default function ChatLine({ message }: ChatLineProps) {
   return (
     <div key={nanoid()} className={`${positionClass} p-1 rounded-lg `}>
       <div className={`flex items-start justify-start ${flowClass}`}>
-        <div className='flex items-center justify-center h-7 w-7 md:h-10 md:w-12 pt-2 flex-shrink-0'>
+        <div className='flex items-center justify-center h-16 w-16 pt-2 flex-shrink-0'>
           <Image
-            className='rounded-full bg-blue-500 md:h-12 md:w-16'
+            className='rounded-full shadow-sm p-1 bg-green-200 h-full w-auto'
             src={avatarSrc}
             width={200}
             height={100}
