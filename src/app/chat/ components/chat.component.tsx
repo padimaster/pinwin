@@ -23,9 +23,9 @@ export default function Chat() {
 
   return (
     <div
-      className={`flex relative flex-col flex-auto flex-shrink-0 rounded-2xl white w-[80vw] h-[80vh] max-w-[800px] max-h-[900px] p-4 border bg-gray-50 shadow-sm border-gray-200`}
+      className={`flex relative flex-col flex-auto flex-shrink-0 rounded-2xl white w-[80vw] h-[80vh] max-w-[800px] max-h-[900px] p-1 md:p-4 border bg-gray-50 shadow-sm border-gray-200`}
     >
-      <h3 className='font-bold text-xl md:text-2xl lg:text-3xl text-center px-4 py-1 text-black mb-5'>
+      <h3 className='font-bold text-xl md:text-2xl lg:text-3xl text-center px-4 text-black my-3 md:my-5'>
         {CHAT_TITLE}
       </h3>
 
@@ -46,10 +46,10 @@ export default function Chat() {
           className='flex flex-row w-full px-2 md:px-5 py-3 mt-4'
         >
           <label htmlFor='chat'></label>
-          <div className='flex flex-row items-center h-16 w-full px-4 border rounded-xl bg-white border-gray-300 hover:border-gray-400'>
+          <div className='flex flex-row items-center h-12 md:h-16 w-full px-4 border rounded-xl bg-white border-gray-300 hover:border-gray-400'>
             <div className='flex-grow'>
               <input
-                className='flex w-full focus:outline-none px-4 h-10'
+                className='flex w-full focus:outline-none px-2 md:px-4 h-8 md:h-10'
                 value={input}
                 onChange={handleInputChange}
                 id='chat'
@@ -59,9 +59,9 @@ export default function Chat() {
                 placeholder='Escribe una pregunta'
               />
             </div>
-            <div className='ml-4'>
-              <button className='flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-full text-white px-4 py-2 flex-shrink-0'>
-                <SendIcon sx={{ fontSize: { xs: 20, sm: 30, md: 25 } }} />
+            <div className='ml-2 md:ml-4'>
+              <button className='flex items-center justify-center text-indigo-500 flex-shrink-0'>
+                <SendIcon sx={{ fontSize: { xs: 25, sm: 30, md: 25 } }} />
               </button>
             </div>
           </div>

@@ -14,13 +14,13 @@ export default function ChatLine({ message }: ChatLineProps) {
   const positionClass =
     role === "user" ? "col-start-2 col-end-13" : "col-start-1 col-end-12";
   const flowClass = role === "user" ? "flex-row-reverse" : "flex-row";
-  const marginClass = role === "user" ? "mr-3" : "ml-3";
+  const marginClass = role === "user" ? "mr-1 md:mr-3" : "ml-1 md:ml-3";
   const avatarSrc = role === "user" ? IMAGES.CHAT.DEFAULT : IMAGES.CHAT.AI;
 
   return (
     <div key={nanoid()} className={`${positionClass} p-1 rounded-lg `}>
       <div className={`flex items-start justify-start ${flowClass}`}>
-        <div className='flex items-center justify-center h-16 w-16 pt-2 flex-shrink-0'>
+        <div className='flex items-center justify-center h-12 w-12 md:h-16 md:w-16 pt-2 flex-shrink-0'>
           <Image
             className='rounded-full shadow-sm p-1 bg-green-200 h-full w-auto'
             src={avatarSrc}

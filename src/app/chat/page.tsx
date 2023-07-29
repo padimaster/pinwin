@@ -10,7 +10,7 @@ export default function ChatPage() {
   return (
     <SocketProvider>
       <main
-        className='min-w-screen min-h-screen flex justify-center items-center gap-10'
+        className='min-w-screen min-h-screen flex justify-center items-center gap-10 px-3'
         style={{
           backgroundImage: `url(${IMAGES.CHAT.BACKGROUND})`,
           backgroundSize: "cover",
