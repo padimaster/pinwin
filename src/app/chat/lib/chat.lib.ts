@@ -1,4 +1,4 @@
 export const CHAT_WELCOME_MESSAGE =
-  "Hello! I'm Capybara, the virtual assistant for the Ecuadorian Amazon.";
+  "Hola soy el asistente virtual de la Feria del préstamo, ¿en qué puedo ayudarte?";
 
-export const CHAT_TITLE = "Consult your doubts with our virtual assistant";
+export const CHAT_TITLE = "Consulta tus dudas con nuestro asistente virtual";
