@@ -8,7 +8,7 @@ export default function CapybaraAvatar() {
       <div className='h-full'>
         <Image
           className='w-auto h-full'
-          src={IMAGES.CAPYBARA}
+          src={IMAGES.AVATAR}
           width={200}
           height={200}
           alt='avatar'
