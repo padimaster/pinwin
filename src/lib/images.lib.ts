@@ -5,5 +5,5 @@ export const IMAGES = {
     DEFAULT: "/images/chat/default-avatar.png",
     DIALOGUE_BOX: "/images/chat/dialogue-box.png",
   },
-  AVATAR: "/images/avatar.svg",
+  AVATAR: "/images/avatar.png",
 };
